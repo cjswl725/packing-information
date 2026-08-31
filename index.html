@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIV'SMED - 해외 물류 & 수출 패키징 OJT 가이드</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #334155;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --sidebar-width: 280px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { overflow-x: hidden; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.25rem;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .mobile-header h1 { font-size: 1.05rem; font-weight: 600; color: #fff; }
+        .menu-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0.25rem; }
+
+        /* Sidebar Navigation */
+        .sidebar { 
+            width: var(--sidebar-width); 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 2rem 1.25rem; 
+            display: flex; 
+            flex-direction: column; 
+            position: fixed;
+            top: 0; bottom: 0; left: 0;
+            overflow-y: auto;
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
+        .sidebar-brand {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Company Logo Styling in Sidebar */
+        .logo-mark {
+            display: block;
+            height: 34px;
+            width: auto;
+            margin-bottom: 0.9rem;
+        }
+
+        .sidebar-brand h2 { font-size: 1.05rem; color: #94a3b8; font-weight: 600; line-height: 1.3; }
+        
+        .nav-list { list-style: none; }
+        .nav-item { margin-bottom: 0.4rem; }
+        .nav-link { 
+            display: flex; 
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1rem; 
+            color: #cbd5e1; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            transition: background 0.2s, color 0.2s; 
+            font-weight: 500; 
+            font-size: 0.92rem; 
+        }
+        .nav-link:hover, .nav-link.active { background: var(--accent) !important; color: #fff !important; }
+        .nav-link .num { font-weight: 700; opacity: 0.8; font-size: 0.85rem; }
+
+        /* Main Content Container */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content { 
+            padding: 2.5rem 3rem; 
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* 1. PPT 1페이지 기반 커버 섹션 (최상단) */
+        .title-cover-section {
+            background: #0d1527;
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 3.5rem 2rem 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 30px rgba(13, 21, 39, 0.3);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .title-cover-section::before {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 350px;
+            background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.18) 0%, rgba(13, 21, 39, 0) 70%);
+            pointer-events: none;
+        }
+
+        /* Cute Mockup Badge */
+        .cover-pill-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            padding: 0.5rem 1.25rem;
+            border-radius: 30px;
+            margin-bottom: 1.75rem;
+        }
+        .cute-mockup-icon {
+            font-size: 1.4rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .cover-pill {
+            color: #60a5fa;
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .cover-main-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+        }
+        .cover-sub-pill {
+            color: #38bdf8;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.01em;
+        }
+        .cover-desc {
+            color: #94a3b8;
+            font-size: 1.05rem;
+            font-weight: 400;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        /* OJT 교육의 목적 및 핵심 방향 카드 */
+        .ojt-goals-container { margin-bottom: 3.5rem; }
+        .ojt-goals-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .ojt-goals-title span { color: var(--accent); font-size: 0.95rem; font-weight: 700; }
+
+        .ojt-goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+            gap: 1.5rem;
+        }
+        .ojt-goal-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+        }
+        .goal-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1.25rem;
+        }
+        .goal-card-header .icon { color: var(--accent); font-size: 1.3rem; }
+        .goal-card-body p {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .goal-card-body ol {
+            padding-left: 1.2rem;
+            font-size: 0.92rem;
+            color: #334155;
+            line-height: 1.7;
+        }
+        .goal-card-body ol li { margin-bottom: 0.75rem; }
+        .goal-card-body ol li strong { color: #0f172a; display: block; }
+
+        /* Section Layout */
+        section { margin-bottom: 4rem; scroll-margin-top: 2rem; }
+        
+        .section-header { 
+            margin-bottom: 1.75rem; 
+            border-bottom: 2px solid var(--border); 
+            padding-bottom: 0.85rem; 
+        }
+        .section-header h2 { 
+            font-size: 1.6rem; 
+            color: var(--primary); 
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .section-header p { color: var(--text-muted); margin-top: 0.35rem; font-size: 0.98rem; }
+
+        /* Cards & Content Blocks */
+        .card { 
+            background: var(--card-bg); 
+            border-radius: 14px; 
+            border: 1px solid var(--border); 
+            padding: 1.75rem; 
+            margin-bottom: 1.75rem; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02); 
+        }
+        .card-title { 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            margin-bottom: 1rem; 
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Callouts */
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 1.25rem;
+        }
+        .callout-title { font-weight: 700; color: #1e40af; font-size: 0.95rem; margin-bottom: 0.35rem; }
+        .callout-desc { font-size: 0.9rem; color: #1e3a8a; line-height: 1.5; }
+
+        /* Table Styling */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-top: 1rem;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; white-space: nowrap; }
+        th, td { padding: 0.85rem 1.1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f1f5f9; color: var(--primary); font-weight: 700; }
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) { background: #fafafa; }
+
+        /* Badges */
+        .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .badge-warn { background: #fef3c7; color: #b45309; }
+        .badge-success { background: #dcfce7; color: #15803d; }
+        .badge-danger { background: #ffe4e6; color: #be123c; }
+
+        /* Calculator Widget */
+        .calc-box { background: #f1f5f9; border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
+        .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+        .input-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.35rem; }
+        .input-group input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; font-weight: 600; color: var(--text-dark); background: #fff; }
+        .calc-btn { width: 100%; padding: 0.75rem; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; font-weight: 700; transition: background 0.2s; }
+        .calc-btn:hover { background: var(--accent-hover); }
+        .calc-result { background: #ffffff; border: 2px solid #bfdbfe; border-radius: 10px; padding: 1.25rem; margin-top: 1.25rem; font-weight: 700; color: var(--accent); font-size: 1rem; line-height: 1.6; }
+
+        /* Backdrop Overlay for Mobile Drawer */
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 998; }
+
+        /* Footer */
+        footer { margin-top: auto; padding: 2rem 0; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; text-align: center; }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .mobile-header { display: flex; }
+            .sidebar { transform: translateX(-100%); top: 60px; height: calc(100vh - 60px); }
+            .sidebar.active { transform: translateX(0); }
+            .sidebar-overlay.active { display: block; }
+            
+            .main-wrapper { margin-left: 0; width: 100%; padding-top: 60px; }
+            .content { padding: 1.5rem 1.25rem; }
+            
+            .title-cover-section { padding: 2.5rem 1.25rem; border-radius: 14px; margin-bottom: 2rem; }
+            .cover-main-title { font-size: 2rem; }
+            .cover-desc { font-size: 0.95rem; }
+            
+            .section-header h2 { font-size: 1.3rem; }
+            .card { padding: 1.25rem; border-radius: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <h1>LIV'SMED 해외영업관리 OJT</h1>
+        <button class="menu-btn" id="menuToggle" aria-label="메뉴 열기">☰</button>
+    </header>
+
+    <!-- Overlay for Mobile Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <!-- LIV'SMED Company Logo -->
+            <img class="logo-mark" src="./logo-navy.png" alt="LIV'SMED">
+            <h2>해외영업관리 OJT<br>패키징 & 물류 가이드</h2>
+        </div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#sec-hero" class="nav-link active">
+                    <span class="num">00.</span> OJT 개요 & 방향
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#sec1" class="nav-link">
+                    <span class="num">01.</span> 부피화물 개념 & 계산
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#sec2" class="nav-link">
+                    <span class="num">02.</span> ArtiSential 포장 규격
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#sec3" class="nav-link">
+                    <span class="num">03.</span> Palletizing & 적재 스펙
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#sec4" class="nav-link">
+                    <span class="num">04.</span> 국가별/MDR 규제 이슈
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        <main class="content">
+
+            <!-- SECTION 00: TOP COVER + OJT PURPOSE & GOALS -->
+            <section id="sec-hero">
+                
+                <!-- 1. PPT 1페이지 커버 + 귀여운 목업 아이콘 -->
+                <div class="title-cover-section">
+                    <div class="cover-pill-container">
+                        <span class="cute-mockup-icon">📦✈️</span>
+                        <span class="cover-pill">해외영업관리팀 OJT 세션</span>
+                    </div>
+
+                    <h1 class="cover-main-title">해외 물류 & 수출 패키징</h1>
+                    <div class="cover-sub-pill">실무 가이드라인</div>
+                    <p class="cover-desc">신규 입사자를 위한 부피화물(Volume Cargo) 견적 산정 및 포장 규격 가이드</p>
+                </div>
+
+                <!-- 2. OJT 교육의 목적 및 핵심 방향 (이미지 3번째 내용) -->
+                <div class="ojt-goals-container">
+                    <div class="ojt-goals-title">
+                        OJT 교육의 <span>목적 및 핵심 방향</span>
+                    </div>
+                    <div class="ojt-goals-grid">
+                        
+                        <!-- 교육의 필요성 -->
+                        <div class="ojt-goal-card">
+                            <div class="goal-card-header">
+                                <span class="icon">🎯</span> 교육의 필요성
+                            </div>
+                            <div class="goal-card-body">
+                                <p>당사 의료기기 제품군은 중량 대비 부피가 큰 <strong>부피화물(Volume Cargo)</strong>의 특성을 가집니다.</p>
+                                <p>단순 제품 무게로만 운송을 안내하면 고객사 및 포워더 견적 시 심각한 운임 오차가 발생하므로, 정확한 CBM 및 운송 스펙을 숙지해야 합니다.</p>
+                            </div>
+                        </div>
+
+                        <!-- 핵심 학습 목표 -->
+                        <div class="ojt-goal-card">
+                            <div class="goal-card-header">
+                                <span class="icon">🧭</span> 핵심 학습 목표
+                            </div>
+                            <div class="goal-card-body">
+                                <ol>
+                                    <li>
+                                        <strong>1. 부피중량(Volumetric Weight) 계산 체계 습득</strong>
+                                        항공/해상 운송 시 Chargeable Weight 산정 기준 이해
+                                    </li>
+                                    <li>
+                                        <strong>2. ArtiSential 포장 규격표 활용 능력</strong>
+                                        38/45cm, 이너/아우터 박스, MDR 규제 대응 숙지
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SECTION 1: Volumetric Cargo -->
+            <section id="sec1">
+                <div class="section-header">
+                    <h2>01. 부피화물(Volume Cargo) 개념 및 견적 산정</h2>
+                    <p>우리 회사 화물은 중량 대비 부피가 커서 운송사가 규격 기준(부피중량)으로 운임을 청구합니다.</p>
+                </div>
+
+                <div class="callout">
+                    <div class="callout-title">📌 Chargeable Weight (청구 중량) 산정 원칙</div>
+                    <div class="callout-desc">
+                        운송사는 <strong>실제 중량(Gross Weight)</strong>과 <strong>부피 중량(Volumetric Weight)</strong> 중 더 큰 값으로 운임을 청구합니다.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">💡 운송 수단별 계산 공식</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>계산 공식</th>
+                                    <th>환산 환율/기준</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>항공(Air) 부피중량</strong></td>
+                                    <td>(가로cm × 세로cm × 높이cm) ÷ 6,000</td>
+                                    <td>1 CBM = 166.67 kg</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>해상(Ocean) CBM</strong></td>
+                                    <td>(가로m × 세로m × 높이m)</td>
+                                    <td>1 CBM = 1,000 kg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Interactive Calculator Widget -->
+                <div class="card">
+                    <div class="card-title">🧮 항공 부피중량 자동 계산기 (실습용)</div>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        박스 규격을 입력하여 실제 중량과 부피 중량을 비교해보세요. (기본값: ArtiSential 10개입 박스)
+                    </p>
+                    <div class="calc-box">
+                        <div class="calc-grid">
+                            <div class="input-group">
+                                <label>가로 (cm)</label>
+                                <input type="number" id="dimW" value="77">
+                            </div>
+                            <div class="input-group">
+                                <label>세로 (cm)</label>
+                                <input type="number" id="dimL" value="66">
+                            </div>
+                            <div class="input-group">
+                                <label>높이 (cm)</label>
+                                <input type="number" id="dimH" value="56">
+                            </div>
+                            <div class="input-group">
+                                <label>실제중량 (Gross Wt, kg)</label>
+                                <input type="number" id="grossWt" value="18.5">
+                            </div>
+                        </div>
+                        <button class="calc-btn" onclick="calculateVol()">계산하기</button>
+
+                        <div class="calc-result" id="calcOutput">
+                            👉 버튼을 누르면 청구 중량이 계산됩니다.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: ArtiSential Packaging Specs -->
+            <section id="sec2">
+                <div class="section-header">
+                    <h2>02. ArtiSential 제품 포장 규격 현황</h2>
+                    <p>자재 규격 및 B골 이너박스 전환에 따른 아우터 박스 사양표입니다.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📦 Outer Box 및 Inner Box 정보</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>제품 / 수량</th>
+                                    <th>구분</th>
+                                    <th>박스 규격 (W x L x H)</th>
+                                    <th>Net Wt</th>
+                                    <th>Gross Wt</th>
+                                    <th>검증 여부</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>ArtiSential 10개입</strong></td>
+                                    <td>38cm (B골 이너)</td>
+                                    <td>77 x 66 x 56 cm</td>
+                                    <td>15 kg</td>
+                                    <td>18.5 kg</td>
+                                    <td><span class="badge badge-success">검증 완료(O)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ArtiSential 10개입</strong></td>
+                                    <td>45cm (Long)</td>
+                                    <td>85 x 66 x 56 cm</td>
+                                    <td>15 kg</td>
+                                    <td>18.5 kg</td>
+                                    <td><span class="badge badge-success">검증 완료(O)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ArtiSential 5개입</strong></td>
+                                    <td>38cm (B골 이너)</td>
+                                    <td>77 x 35 x 56 cm</td>
+                                    <td>6.5 kg</td>
+                                    <td>10 kg</td>
+                                    <td><span class="badge badge-success">검증 완료(O)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ArtiSential 2개입</strong></td>
+                                    <td>38cm (비멸균)</td>
+                                    <td>77 x 35 x 22 cm</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td><span class="badge badge-danger">미검증(X)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Palletizing & Air/Ocean Stack -->
+            <section id="sec3">
+                <div class="section-header">
+                    <h2>03. Palletizing & 항공/해상 적재 스펙</h2>
+                    <p>파렛트 단위 운송 시 단수별 높이 제한 및 여객기 적재 기준입니다.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🚢 Ocean Pallet Stack 스펙 (1 Pallet 기준)</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>적재 방식</th>
+                                    <th>Pallet Dimension (W x L x H)</th>
+                                    <th>Weight (kg)</th>
+                                    <th>총 수량 (Units)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Single Stack (1단)</strong></td>
+                                    <td>148 x 113 x 75 cm</td>
+                                    <td>52 kg</td>
+                                    <td>20 units</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Double Stack (2단)</strong></td>
+                                    <td>148 x 113 x 135 cm</td>
+                                    <td>89 kg</td>
+                                    <td>40 units</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Triple Stack (3단)</strong></td>
+                                    <td>148 x 113 x 185 cm</td>
+                                    <td>126 kg</td>
+                                    <td>60 units</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">✈️ 항공 여객기 적재 제한 및 Dead Space</div>
+                    <div class="callout" style="background: #fff1f2; border-left-color: #e11d48; margin-bottom: 0;">
+                        <div class="callout-title" style="color: #be123c;">⚠️ 여객기 적재 제한 가이드</div>
+                        <div class="callout-desc" style="color: #9f1239;">
+                            • 여객기 적재 높이 제한: <strong>Max 160 cm</strong> (최대 2단 적재 가능)<br>
+                            • 현행 아우터 박스(5개용) 2단 적재 높이 112cm 적용 시 상부에 <strong>약 48cm의 Dead Space가 발생</strong>하므로 공간 효율 감안 필요.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Regional & MDR Regulations -->
+            <section id="sec4">
+                <div class="section-header">
+                    <h2>04. 국가별/MDR 규제 및 예외 사항</h2>
+                    <p>유럽 MDR 통보 절차 및 자재 재고 상태에 따른 포장 유의사항입니다.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">⚠️ 독일/유럽 국가 (MDR 변경 이슈) 대응 규칙</div>
+                    <div class="callout" style="background: #f0fdf4; border-left-color: #16a34a;">
+                        <div class="callout-title" style="color: #15803d;">💡 유럽향 포장 예외 케이스</div>
+                        <div class="callout-desc" style="color: #166534;">
+                            독일 및 유럽 주요국은 MDR 변경 통보 절차로 인해 <strong>기존 이너박스</strong>를 사용해야 합니다. 단, 이중포장 진행 시 Outer Box는 <strong>구형 38 박스</strong>를 적용합니다. (전 국가 신규 이너박스 전면 적용 시점까지 유지)
+                        </div>
+                    </div>
+                    <ul style="padding-left: 1.25rem; font-size: 0.92rem; line-height: 1.8;">
+                        <li><strong>45cm 5개입 박스</strong>는 출고 물량 저조로 현재 별도 포장 자재 재고를 보유하고 있지 않습니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer>
+                <p>© LIV'SMED 해외영업관리팀 OJT 교육용 가이드 | Medical Device Export Logistics Manual</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Sidebar Drawer Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        }
+
+        menuToggle.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // Sidebar Navigation Active Highlight Logic (Click & Scroll)
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        function setActiveNav(targetHref) {
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === targetHref) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Handle Click Event
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetHref = link.getAttribute('href');
+                setActiveNav(targetHref);
+
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Scroll Spy Logic
+        window.addEventListener('scroll', () => {
+            let currentId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 150) {
+                    currentId = section.getAttribute('id');
+                }
+            });
+
+            if (currentId) {
+                setActiveNav('#' + currentId);
+            }
+        });
+
+        // Volumetric Weight Calculation Logic
+        function calculateVol() {
+            const w = parseFloat(document.getElementById('dimW').value) || 0;
+            const l = parseFloat(document.getElementById('dimL').value) || 0;
+            const h = parseFloat(document.getElementById('dimH').value) || 0;
+            const grossWt = parseFloat(document.getElementById('grossWt').value) || 0;
+
+            const volWt = (w * l * h) / 6000;
+            const chargeableWt = Math.max(grossWt, volWt);
+
+            const isVolumetric = volWt > grossWt;
+
+            const outputDiv = document.getElementById('calcOutput');
+            outputDiv.innerHTML = `
+                📊 <strong>계산 결과:</strong><br>
+                • 부피중량(Volumetric Wt): <strong>약 ${volWt.toFixed(2)} kg</strong><br>
+                • 실제중량(Gross Wt): <strong>${grossWt.toFixed(2)} kg</strong><br>
+                • 최종 청구중량(Chargeable Wt): <span style="color: #2563eb; font-size: 1.15rem;">${chargeableWt.toFixed(2)} kg</span><br>
+                <small style="color: ${isVolumetric ? '#d97706' : '#15803d'}; font-weight: normal;">
+                    ${isVolumetric ? '⚠️ 부피중량이 실제 중량(18.5kg)보다 크므로 부피중량 기준 청구됩니다.' : '✅ 실제중량이 더 크므로 실제중량 기준으로 청구됩니다.'}
+                </small>
+            `;
+        }
+
+        // Run initial calculation
+        calculateVol();
+    </script>
+</body>
+</html>
